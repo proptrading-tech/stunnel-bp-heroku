@@ -1,11 +1,43 @@
 #!/bin/sh
 
+# Assign arguments to variables
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
 echo "Compiling custom buildpack..."
-# Example action: Install stunnel
-apt-get update && apt-get install -y stunnel
+
+# Create a directory for stunnel
+STUNNEL_DIR=$BUILD_DIR/stunnel
+mkdir -p $STUNNEL_DIR
+
+# Download and extract stunnel
+STUNNEL_VERSION=5.60
+STUNNEL_TAR=stunnel-$STUNNEL_VERSION.tar.gz
+STUNNEL_URL=https://www.stunnel.org/downloads/archives/5.x/$STUNNEL_TAR
+
+echo "Downloading stunnel..."
+curl -L -o $STUNNEL_DIR/$STUNNEL_TAR $STUNNEL_URL
+
+echo "Extracting stunnel..."
+tar -xzvf $STUNNEL_DIR/$STUNNEL_TAR -C $STUNNEL_DIR
+
+# Navigate to the stunnel directory
+cd $STUNNEL_DIR/stunnel-$STUNNEL_VERSION
+
+# Configure and install stunnel
+./configure --prefix=$STUNNEL_DIR
+make
+make install
+
+# Clean up
+cd $BUILD_DIR
+rm -rf $STUNNEL_DIR/$STUNNEL_TAR $STUNNEL_DIR/stunnel-$STUNNEL_VERSION
+
+# Ensure the stunnel binary is in the PATH
+export PATH=$STUNNEL_DIR/bin:$PATH
+
+
+echo "stunnel setup complete."
 
 exit 0
