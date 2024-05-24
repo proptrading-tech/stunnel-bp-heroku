@@ -12,9 +12,9 @@ STUNNEL_DIR=$BUILD_DIR/stunnel
 mkdir -p $STUNNEL_DIR
 
 # Download and extract stunnel
-STUNNEL_VERSION=5.60
+STUNNEL_VERSION=5.72
 STUNNEL_TAR=stunnel-$STUNNEL_VERSION.tar.gz
-STUNNEL_URL=https://www.stunnel.org/downloads/archives/5.x/$STUNNEL_TAR
+STUNNEL_URL=https://www.stunnel.org/downloads/$STUNNEL_TAR
 
 echo "Downloading stunnel..."
 curl -L -o $STUNNEL_DIR/$STUNNEL_TAR $STUNNEL_URL
