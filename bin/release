@@ -2,5 +2,5 @@
 cat <<EOF
 ---
 default_process_types:
-  web: stunnel /app/stunnel.conf && npm start
+  web: stunnel /app/config/stunnel.conf && npm start
 EOF
